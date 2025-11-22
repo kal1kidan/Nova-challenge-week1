@@ -1,84 +1,180 @@
-# Nova Financial Solutions – Week 1 Challenge
+# Stock Analysis Dashboard – Task 1 to Task 3
 
 ## Project Overview
+This repository contains a comprehensive analysis of stock prices and financial news for multiple companies, covering three main tasks:
 
-This project is part of the **Nova Financial Solutions Week 1 Challenge**, focusing on financial data analysis. The challenge is divided into two main tasks:
+1. **Task 1 – Exploratory Data Analysis (EDA)**
+   - Clean, inspect, and visualize stock price data.
+   - Identify trends, missing data, and basic statistics.
+   - Data sources: six stock CSV files (`AAPL.csv`, `AMZN.csv`, `GOOG.csv`, `META.csv`, `MSFT.csv`, `NVDA.csv`).
 
-1. **Task 1: News Sentiment Analysis (Completed)**
-   - Analyzed financial news headlines to quantify sentiment.
-   - Explored correlations between news sentiment and stock movements.
-   - Conducted exploratory data analysis (EDA) on headline lengths, publishers, and publication times.
+2. **Task 2 – Quantitative Analysis**
+   - Calculate technical indicators using **TA-Lib**: SMA, RSI, MACD.
+   - Visualize stock price trends alongside indicators.
+   - Insights into stock behavior based on indicators.
+   - Organized code in **modular functions** inside `src/technical_analysis.py` for reusability.
 
-2. **Task 2: Quantitative Stock Analysis (Partial Progress)**
-   - Prepared and loaded stock price data for multiple companies (6 CSV files).
-   - Calculated technical indicators using **TA-Lib** such as SMA, RSI, and MACD.
-   - Created visualizations to understand price trends and the behavior of indicators.
-   - Summary statistics for key indicators have been generated.
-   - Insights and deeper trend analysis are partially completed.
+3. **Task 3 – Correlation Between News and Stock Movement**
+   - Perform sentiment analysis on news headlines using **TextBlob**.
+   - Align news sentiment with daily stock returns.
+   - Compute correlation between sentiment and stock price movement.
+   - Code organized in `src/news_correlation.py` for modularity.
 
 ---
 
-## Folder Structure
+## Repository Structure
+```
 
-```text
-├── .vscode/
-│   └── settings.json
+Nova-Financial-Solutions-week-1/
+│
+├── .github/                   # GitHub Actions workflows
+│   └── workflows/
+│       └── unittests.yml
 ├── .gitignore
-├── requirements.txt
 ├── README.md
-├── src/
-│   └── __init__.py
-├── notebooks/
-│   ├── task1_eda_analysis.ipynb
-│   └── task2_stock_analysis.ipynb
-├── data/
-│   └── stock_data/  # Contains 6 CSVs for Task 2
-└── scripts/
-    └── __init__.py
-How to Run
+├── requirements.txt           # Project dependencies
+├── src/                       # Modular Python package
+│   ├── **init**.py
+│   ├── technical_analysis.py  # Functions/classes for Task 2
+│   ├── news_correlation.py    # Functions/classes for Task 3
+│   └── utils.py               # Helper functions for loading data & plotting
+├── notebooks/                 # Jupyter notebooks for Tasks 1–3
+│   ├── Task1_EDA.ipynb
+│   ├── Task2_TechnicalAnalysis.ipynb
+│   └── Task3_NewsCorrelation.ipynb
+├── data/                      # CSV datasets
+│   ├── stock_data/
+│   │   ├── AAPL.csv
+│   │   ├── AMZN.csv
+│   │   ├── GOOG.csv
+│   │   ├── META.csv
+│   │   ├── MSFT.csv
+│   │   └── NVDA.csv
+│   └── raw_analyst_ratings.csv
+└── scripts/                   # Optional scripts to run notebooks or analyses
+├── run_task2.py
+└── run_task3.py
 
-Clone the repository
+````
 
-git clone https://github.com/kal1kidan/Nova-challenge-week1.git
-cd Nova-challenge-week1
+---
 
+## Installation & Setup
 
-Create and activate a virtual environment
+1. **Clone the repository**
+```bash
+git clone <your-repo-link>
+cd Nova-Financial-Solutions-week-1
+````
 
+2. **Create a virtual environment**
+
+```bash
 python -m venv .venv
-.\.venv\Scripts\activate   # Windows
-source .venv/bin/activate  # Linux/Mac
+```
 
+3. **Activate the virtual environment**
 
-Install dependencies
+* Windows PowerShell:
 
+```powershell
+.venv\Scripts\Activate.ps1
+```
+
+* macOS/Linux:
+
+```bash
+source .venv/bin/activate
+```
+
+4. **Install dependencies**
+
+```bash
 pip install -r requirements.txt
-pip install TA-Lib
+```
 
+5. **Verify installation**
 
-Run Notebooks
+```bash
+python -c "import talib, textblob, pandas; print('All dependencies installed')"
+```
 
-Open notebooks/task1_eda_analysis.ipynb to explore Task 1 analysis.
+---
 
-Open notebooks/task2_stock_analysis.ipynb to explore Task 2 partial progress.
+## Usage
 
-Key Libraries Used
+### **Task 1 – EDA**
 
-pandas – Data manipulation
+* Open `notebooks/Task1_EDA.ipynb`.
+* Inspect stock data, visualize trends, and check missing values.
 
-numpy – Numerical calculations
+### **Task 2 – Technical Analysis**
 
-matplotlib / seaborn – Data visualization
+* Modular code in `src/technical_analysis.py`:
 
-TA-Lib – Technical indicators for stock analysis
+```python
+from src.technical_analysis import compute_indicators, plot_sma_macd
 
-pynance (optional) – Financial metrics 
+dfs_stocks = load_stock_data('../data/stock_data/')
+dfs_indicators = compute_indicators(dfs_stocks)
+plot_sma_macd(dfs_indicators['AAPL.csv'])
+```
 
-Notes
+* Notebooks demonstrate calculations and plots for all 6 stocks.
 
-The raw CSV files are excluded from GitHub to avoid exceeding GitHub file size limits.
+### **Task 3 – News Correlation**
 
-Task 2 is partially completed; technical indicators are calculated, and visualizations are prepared, but further insights and trend analysis are ongoing.
+* Modular code in `src/news_correlation.py`:
 
-Ensure that all CSV files are present locally in data/stock_data/ to run Task 2 notebook successfully.
+```python
+from src.news_correlation import compute_sentiment, merge_with_returns, compute_correlation
+
+df_news = load_news_data('../data/raw_analyst_ratings.csv')
+dfs_corr = merge_with_returns(dfs_returns, df_news)
+compute_correlation(dfs_corr)
+```
+
+* Notebook provides detailed analysis and correlation results.
+
+---
+
+## Key Insights
+
+1. **Task 1**
+
+   * Basic trends observed in each stock (uptrends, volatility spikes).
+2. **Task 2**
+
+   * SMA and MACD indicate trend reversals and momentum.
+   * RSI identifies potential overbought/oversold periods.
+3. **Task 3**
+
+   * News sentiment shows weak-to-moderate correlation with daily returns.
+   * Some spikes in sentiment precede significant stock movement.
+
+---
+
+## KPIs
+
+* **Proactivity:** Explored multiple libraries (TA-Lib, TextBlob, pandas).
+* **Modularity:** Logic organized in `src/` package for reusability.
+* **Reproducibility:** Notebook logic can be executed with provided scripts.
+* **Analysis:** Covers EDA, technical analysis, and sentiment correlation.
+
+---
+
+## References
+
+* [TA-Lib Documentation](https://mrjbq7.github.io/ta-lib/)
+* [TextBlob Documentation](https://textblob.readthedocs.io/en/dev/)
+* [Pandas Documentation](https://pandas.pydata.org/docs/)
+* [Matplotlib Documentation](https://matplotlib.org/stable/contents.html)
+
+---
+
+✅ **Notes**
+
+* All calculations are performed in Python using a modular approach.
+* Follow the notebook order: **Task1 → Task2 → Task3**.
+* Daily returns and sentiment scores are aligned by date for correlation analysis.
 
